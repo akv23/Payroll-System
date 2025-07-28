@@ -1,0 +1,47 @@
+{
+  "empId": "EMP0001",
+  "employeeDTO": {
+    "email": "john.doe@example.com",
+    "firstName": "John",
+    "lastName": "Doe",
+    "mobileNumber": "9876543210",
+    "nationalId": "123456789012",
+      "addressDTO": {
+      "street": "456 St",
+      "city": "Mumbai",
+      "state": "Maharashtra",
+      "postalCode": "400001",
+      "country": "India"
+    }
+  },
+  "companyDTO": {
+    "companyName": "TechCorp",
+    "addressDTO": {
+      "street": "456 Tech Park",
+      "city": "Mumbai",
+      "state": "Maharashtra",
+      "postalCode": "400101",
+      "country": "India"
+    },
+    "contactEmail": "contact@techcorp.com",
+    "contactPhone": "0123456789"
+  },
+  "jobInfoDTO": {
+    "jobLevel": ["MANAGER"],
+    "jobTitle": "Software Developer",
+    "employeeStatus": ["ACTIVE"]
+  },
+  "compInfoDTO": {
+    "payComponentDTO": {
+      "name": "Base Salary",
+      "amount": 100000.00,
+      "frequency": ["Monthly"]
+    },
+    "paymentInfoDTO": {
+      "bankName": "State Bank Of India",
+      "accountNumber": "123456789012",
+      "ifscCode": "SBIN0001234",
+      "accountHolderName": "John Doe"
+    }
+  }
+}

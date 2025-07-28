@@ -1,0 +1,7 @@
+# Backend
+/backend/target/
+/backend/.idea/
+/.idea/vcs.xml
+/.vscode
+/.idea
+.gitattributes
