@@ -26,8 +26,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class SalarySlipController {
 
-    @Autowired
-    private SalarySlipService salarySlipService;
+    private final SalarySlipService salarySlipService;
+    private final SalarySlipMapper salarySlipMapper;
 
     @GetMapping("/{empId}")
     public ResponseEntity<SalarySlipDTO> getSalarySlipsByEmpId(@PathVariable String empId) {
@@ -37,7 +37,7 @@ public class SalarySlipController {
     @GetMapping("/{empId}/pdf")
     public ResponseEntity<byte[]> downloadSalarySlipPdf(@PathVariable String empId) {
         SalarySlipDTO slipDto = salarySlipService.getSalarySlipsByEmpId(empId);
-        SalarySlip slip = SalarySlipMapper.INSTANCE.toEntity(slipDto);
+        SalarySlip slip = salarySlipMapper.toEntity(slipDto);
         byte[] pdf = salarySlipService.generateSalarySlipPdf(slip);
 
         HttpHeaders headers = new HttpHeaders();
