@@ -66,9 +66,14 @@ public class EmployeeDataService {
         EmployeeData employeeData = employeeDataRepository.findByEmpId(empId)
                 .orElseThrow(() -> new NotFoundException("Employee ID not found"));
         
-        employeeDataMapper.updateEntityFromRequest(employeeData, requestEmployeeDataDTO);
-        employeeData = employeeDataRepository.save(employeeData);
-        return employeeDataMapper.toResponseDTO(employeeData);
+        // Create a new entity from the request DTO but preserve the existing ID and empId
+        EmployeeData updatedEmployeeData = employeeDataMapper.toEntity(requestEmployeeDataDTO);
+        updatedEmployeeData.setId(employeeData.getId());
+        updatedEmployeeData.setEmpId(empId);
+        
+        // Save the updated entity
+        EmployeeData savedEmployeeData = employeeDataRepository.save(updatedEmployeeData);
+        return employeeDataMapper.toResponseDTO(savedEmployeeData);
     }
 
     // Delete employeeData

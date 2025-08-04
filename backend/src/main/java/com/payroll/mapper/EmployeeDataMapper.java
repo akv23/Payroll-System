@@ -34,11 +34,5 @@ public interface EmployeeDataMapper {
     // List all EmployeeData
     List<EmployeeData> toEntities(List<EmployeeDataRequestDTO> employeeDataRequestDTOs);
 
-    // Update EmployeeData from EmployeeDataRequestDTO
-    @Mapping(target = "employeeDTO", source = "employeeDataRequestDTO.employeeDTO")
-    @Mapping(target = "companyDTO", source = "employeeDataRequestDTO.companyDTO")
-    @Mapping(target = "jobInfoDTO", source = "employeeDataRequestDTO.jobInfoDTO")
-    @Mapping(target = "compInfoDTO", source = "employeeDataRequestDTO.compInfoDTO")
-    @Mapping(target = "empId", source = "employeeData.empId")
-    EmployeeDataResponseDTO updateEntityFromRequest(EmployeeData employeeData, EmployeeDataRequestDTO employeeDataRequestDTO);
+
 }
