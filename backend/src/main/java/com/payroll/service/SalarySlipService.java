@@ -62,32 +62,6 @@ public class SalarySlipService {
     }
     // Method to Generate PDF for a salary slip
     public byte[] generateSalarySlipPdf(SalarySlip slip) {
-        Document document = new Document();
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        try {
-            PdfWriter.getInstance(document, out);
-            document.open();
-            document.add(new Paragraph("Salary Slip for: " + slip.getEmpId()));
-            document.add(new Paragraph("Month: " + slip.getMonth() + ", Year: " + slip.getYear()));
-            document.add(new Paragraph("Generated Date: " + slip.getGeneratedDate()));
-            document.add(new Paragraph("Net Salary: Rs. " + slip.getNetSalary()));
-
-            document.add(new Paragraph("\nBreakdown:"));
-            for (SalaryComponentBreakdown comp : slip.getBreakdown()) {
-                document.add(new Paragraph(comp.getName() + ": Rs. " + comp.getAmount() + " (" + comp.getFrequency() + ")"));
-            }
-
-            document.add(new Paragraph("\nBank Info:"));
-            document.add(new Paragraph("Account Holder: " + slip.getPaymentInfo().getAccountHolderName()));
-            document.add(new Paragraph("Bank: " + slip.getPaymentInfo().getBankName()));
-            document.add(new Paragraph("Branch: " + slip.getPaymentInfo().getBranchName()));
-            document.add(new Paragraph("A/C No: " + slip.getPaymentInfo().getAccountNumber()));
-            document.add(new Paragraph("IFSC: " + slip.getPaymentInfo().getIfscCode()));
-
-            document.close();
-        } catch (DocumentException e) {
-            e.printStackTrace();
-        }
-        return out.toByteArray();
+        return salarySlipPdfUtil.generateSalarySlipPdf(slip);
     }
 }
