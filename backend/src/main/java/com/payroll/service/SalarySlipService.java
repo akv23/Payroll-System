@@ -1,6 +1,5 @@
 package com.payroll.service;
 
-import java.io.ByteArrayOutputStream;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
@@ -8,17 +7,13 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.pdf.PdfWriter;
-
 import com.payroll.dto.SalarySlipDTO;
 import com.payroll.mapper.SalarySlipMapper;
 import com.payroll.model.PaymentInfo;
 import com.payroll.model.SalaryComponentBreakdown;
 import com.payroll.model.SalarySlip;
 import com.payroll.repository.SalarySlipRepository;
+import com.payroll.util.SalarySlipPdfUtil;
 
 @Service
 public class SalarySlipService {
@@ -28,6 +23,9 @@ public class SalarySlipService {
 
     @Autowired
     private SalarySlipMapper salarySlipMapper;
+
+    @Autowired
+    private SalarySlipPdfUtil salarySlipPdfUtil;
 
     // Method to create a new salary slip
     public SalarySlip createSalarySlip(String empId, int month, int year, double netSalary,
