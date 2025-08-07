@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class SalaryComponentBreakdown {
-    private String name;
+    private ListPayComponent componentType;
     private double amount;
     private String frequency;
 }

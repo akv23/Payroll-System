@@ -15,13 +15,13 @@ import lombok.*;
 public class PayComponent {
 
     @Field("name")
-    private String name;
+    private ListPayComponent componentType;
 
     @Field("amount")
     private double amount;
 
     @Field("frequency")
-    private Set<Frequency> frequency; // e.g., "Monthly", "Biweekly", etc.
+    private Frequency frequency; // e.g., "Monthly", "Biweekly", etc.
 
     @Field("used")
     private boolean used; // Mark true once used
