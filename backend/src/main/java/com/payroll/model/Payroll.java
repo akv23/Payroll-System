@@ -27,6 +27,9 @@ public class Payroll {
     private double baseSalary;
     private double hra;
     private double da;
+    private double other;
+    private double bonus;
+    private double pf;
     private double tax;
     private double grossSalary;
     private double netSalary;
