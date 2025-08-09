@@ -15,25 +15,33 @@ public class GlobalExceptionHandler {
 
     // Handle AdminNotFoundException
     @ExceptionHandler(AdminNotFoundException.class)
-    public ResponseEntity<String> handleAdminNotFound(AdminNotFoundException ex) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    public ResponseEntity<Map<String, String>> handleAdminNotFound(AdminNotFoundException ex) {
+        Map<String, String> error = new HashMap<>();
+        error.put("error", "Not Found : - "+ex.getMessage());
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND); // 404 Not Found
     }
     // handle OperationNotAllowedException
     @ExceptionHandler(OperationNotAllowedException.class)
-    public ResponseEntity<String> handleOperationNotAllowed(OperationNotAllowedException ex) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+    public ResponseEntity<Map<String, String>> handleOperationNotAllowed(OperationNotAllowedException ex) {
+        Map<String, String> error = new HashMap<>();
+        error.put("error", "Bad Request : - "+ex.getMessage());
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST); //400 Bad Request
     }
     
     // handle NotFoundException
     @ExceptionHandler(NotFoundException.class)
-    public ResponseEntity<String> handleNotFound(NotFoundException ex) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    public ResponseEntity<Map<String, String>> handleNotFound(NotFoundException ex) {
+        Map<String, String> error = new HashMap<>();
+        error.put("error", "Not Found : - "+ex.getMessage());
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND); // 404 Not Found
     }
 
     // Handle ExpiredJwtException
     @ExceptionHandler(ExpiredJwtException.class)
-    public ResponseEntity<String> handleExpiredJwtException(ExpiredJwtException ex) {
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Token has expired");
+    public ResponseEntity<Map<String, String>> handleExpiredJwtException(ExpiredJwtException ex) {
+        Map<String, String> error = new HashMap<>();
+        error.put("error", "Token has expired : - "+ex.getMessage());
+        return new ResponseEntity<>(error, HttpStatus.UNAUTHORIZED);// 401 Unauthorized
     }
 
     @ExceptionHandler(Exception.class)
