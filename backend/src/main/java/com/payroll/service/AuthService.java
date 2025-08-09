@@ -1,5 +1,7 @@
 package com.payroll.service;
 
+import com.payroll.exception.AdminNotFoundException;
+import com.payroll.exception.DuplicateResourceException;
 import com.payroll.model.Role;
 import com.payroll.model.User;
 
@@ -28,7 +30,7 @@ public class AuthService {
     // Method to register a new user (admin)
     public User registerAdmin(String username, String password) {
         if (userRepository.existsByUsername(username)) {
-            throw new RuntimeException("Admin with this email already exists");
+            throw new DuplicateResourceException("Admin with this username already exists");
         }
 
         User admin = User.builder()
@@ -43,7 +45,7 @@ public class AuthService {
     // Method to Login a user (admin)
     public String login(String username, String password) {
         User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new AdminNotFoundException("User not found"));
 
         if (!passwordEncoder.matches(password, user.getPassword())) {
             throw new RuntimeException("Invalid password");
