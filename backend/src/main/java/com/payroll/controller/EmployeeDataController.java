@@ -53,7 +53,7 @@ public class EmployeeDataController {
 
     // Delete employeeData by Employee ID
     @DeleteMapping("/{empId}")
-    public ResponseEntity<?> deleteEmployeeData(@RequestParam String empId) {
+    public ResponseEntity<?> deleteEmployeeData(@PathVariable String empId) {
         employeeDataService.deleteEmployeeData(empId);
         return ResponseEntity.ok("Employee data with ID " + empId + " is deleted successfully");
     }
