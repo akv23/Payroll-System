@@ -50,7 +50,7 @@ public class AdminController {
     @PutMapping("/update")
     public ResponseEntity<String> updateAdminRole(@RequestBody UserDTO userDTO) {
         String username = userDTO.getUsername();
-        Set<Role> newRole = userDTO.getRole(); 
+        Role newRole = userDTO.getRole(); 
         System.out.println("Attempting to update admin role for username: " + username + " to role: " + newRole);
         adminService.updateAdminRole(username, newRole);
         return ResponseEntity.ok("Admin role updated successfully");
