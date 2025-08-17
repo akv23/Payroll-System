@@ -2,7 +2,6 @@ package com.payroll.config;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
-import java.util.List;
 
 
 import javax.crypto.SecretKey;
@@ -16,7 +15,6 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SignatureException;
 
