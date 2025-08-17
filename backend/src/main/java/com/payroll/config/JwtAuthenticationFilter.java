@@ -1,9 +1,9 @@
 package com.payroll.config;
 
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Collections;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -27,7 +27,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private JwtUtil jwtUtil;
 
     @Override
-    protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
+    protected boolean shouldNotFilter(@NonNull HttpServletRequest request) throws ServletException {
         String path = request.getRequestURI();
 
         // Skip JWT filter for authentication endpoints
@@ -35,7 +35,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             return true;
         }
 
-        // Skip filter if no Authorization header is present
+        // Filter if no Authorization header is present
         String authHeader = request.getHeader("Authorization");
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             return false; // Let it go through the filter to handle missing token
@@ -46,9 +46,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request,
-            HttpServletResponse response,
-            FilterChain filterChain)
+    protected void doFilterInternal(@NonNull HttpServletRequest request,
+            @NonNull HttpServletResponse response,
+            @NonNull FilterChain filterChain)
             throws ServletException, IOException {
 
         final String authHeader = request.getHeader("Authorization");
@@ -71,19 +71,16 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             }
 
             final String username = jwtUtil.extractUsername(token);
-            final List<String> roles = jwtUtil.extractRoles(token); // Expecting a list
+            final String role = jwtUtil.extractRoles(token); // Expecting a list
 
             if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
                 // Convert roles to GrantedAuthority
-                List<GrantedAuthority> authorities = roles.stream()
-                        .map(role -> new SimpleGrantedAuthority("ROLE_" + role))
-                        .collect(Collectors.toList());
-
-                System.out.println("Roles from token: " + roles);
+                GrantedAuthority authorities = new SimpleGrantedAuthority("ROLE_" + role);
+                System.out.println("Roles from token: " + role);
                 System.out.println("Authorities: " + authorities);
 
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(username, null,
-                        authorities);
+                Collections.singletonList(authorities));
 
                 SecurityContextHolder.getContext().setAuthentication(authToken);
             }

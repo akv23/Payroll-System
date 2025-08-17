@@ -25,7 +25,7 @@ public class AdminService {
     // Get all admins
     public List<User> getAllAdmins() {
         List<User> admins = userRepository.findAll().stream()
-                .filter(user -> user.getRoles() != null && user.getRoles().contains(Role.ADMIN))
+                .filter(user -> user.getRoles() != null && user.getRoles()==Role.ADMIN)
                 .collect(Collectors.toList());
         if (admins.isEmpty()) {
             throw new AdminNotFoundException("No admins found");
@@ -36,7 +36,7 @@ public class AdminService {
     // Get all super admins
     public List<User> getAllSuperAdmins() {
         List<User> superAdmins = userRepository.findAll().stream()
-                .filter(user -> user.getRoles() != null && user.getRoles().contains(Role.SUPER_ADMIN))
+                .filter(user -> user.getRoles() != null && user.getRoles()==Role.SUPER_ADMIN)
                 .collect(Collectors.toList());
 
         if (superAdmins.isEmpty()) {
@@ -46,10 +46,10 @@ public class AdminService {
     }
 
     //Update admin role
-    public void updateAdminRole(String username, Set<Role> newRole) {
+    public void updateAdminRole(String username, Role newRole) {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new AdminNotFoundException("Admin with username '" + username + "' not found"));
-        if (user.getRoles().contains(Role.SUPER_ADMIN)) {
+        if (user.getRoles()==Role.SUPER_ADMIN) {
             throw new OperationNotAllowedException("Cannot change role of super admin");
         }
         user.setRoles(newRole);
@@ -60,7 +60,7 @@ public class AdminService {
     public void deleteAdmin(String username) {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new AdminNotFoundException("Admin with username '" + username + "' not found"));
-        if(user.getRoles().contains(Role.SUPER_ADMIN)) {
+        if(user.getRoles()==Role.SUPER_ADMIN) {
             throw new OperationNotAllowedException("Cannot delete super admin");
         }
         userRepository.delete(user);
