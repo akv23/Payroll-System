@@ -8,8 +8,6 @@ import com.payroll.model.User;
 import com.payroll.repository.UserRepository;
 import com.payroll.config.JwtUtil;
 import lombok.RequiredArgsConstructor;
-import java.util.Collections;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -36,7 +34,7 @@ public class AuthService {
         User admin = User.builder()
                 .username(username)
                 .password(passwordEncoder.encode(password))
-                .roles(Collections.singleton(Role.ADMIN))
+                .roles(Role.ADMIN)
                 .build();
 
         return userRepository.save(admin);

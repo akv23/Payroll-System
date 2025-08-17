@@ -3,8 +3,7 @@ package com.payroll.config;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
+
 
 import javax.crypto.SecretKey;
 
@@ -33,11 +32,11 @@ public class JwtUtil {
     private long jwtExpirationInMs;
    
     // Method to generate a JWT token
-    public String generateToken(String username, Set<Role> role) {
+    public String generateToken(String username, Role role) {
         SecretKey key = Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
         return Jwts.builder()
                 .subject(username)
-                .claim("role", role.stream().map(Role::name).collect(Collectors.toList()))
+                .claim("role", role)
                 .issuedAt(new Date())
                 .expiration(new Date(System.currentTimeMillis() + jwtExpirationInMs))
                 .signWith(key)
@@ -62,8 +61,7 @@ public class JwtUtil {
     }
 
     // Method to extract role from JWT token
-    @SuppressWarnings("unchecked")
-    public List<String> extractRoles(String token) {
+    public String extractRoles(String token) {
         try {
             token = validateTokenFormat(token);
             Claims claims = Jwts.parser()
@@ -71,7 +69,7 @@ public class JwtUtil {
                     .build()
                     .parseSignedClaims(token)
                     .getPayload();
-            return claims.get("role", List.class);
+            return claims.get("role", String.class);
         } catch (Exception e) {
             throw new IllegalArgumentException("Unable to extract roles from token: " + e.getMessage(), e);
         }
